@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { searchMovies } from 'services/searchApi';
 import { Link } from 'react-router-dom';
 
-export const Movies = () => {
+export const Movies = query => {
   const [moviesList, setMoviesList] = useState([]);
 
   useEffect(() => {
