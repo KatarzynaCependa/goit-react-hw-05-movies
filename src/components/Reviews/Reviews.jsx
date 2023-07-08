@@ -1,29 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-
-const API_key = '255082541761d9a3615c35334b0c6dcc';
+import { getReviews } from 'services/searchApi';
 
 export const Reviews = () => {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
 
-  const getReviews = async () => {
-    const reviews = await axios.get(
-      `https://api.themoviedb.org/3/movie/${movieId}/reviews`,
-      {
-        params: {
-          api_key: API_key,
-        },
-      }
-    );
-    return reviews.data.results;
-  };
-
   useEffect(() => {
-    getReviews().then(reviews => {
-      setReviews(reviews);
-    });
+    const asyncFunc = async () => {
+      try {
+        setReviews(await getReviews(movieId));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    asyncFunc();
   }, [movieId]);
 
   return (

@@ -1,34 +1,21 @@
 import { useParams, Link, Outlet } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-
-const API_key = '255082541761d9a3615c35334b0c6dcc';
+import { getDetails } from 'services/searchApi';
 
 export const MovieDetails = () => {
   const { movieId } = useParams();
   const [movieDetails, setMovieDetails] = useState({});
   // const [genres, setGenres] = useState([]);
 
-  const getDetails = async () => {
-    const movieDetails = await axios.get(
-      `https://api.themoviedb.org/3/movie/${movieId}`,
-      {
-        params: {
-          api_key: API_key,
-        },
-      }
-    );
-    console.log('movieDetails', movieDetails);
-    return movieDetails.data;
-  };
-
   useEffect(() => {
-    getDetails().then(movieDetails => {
-      setMovieDetails(movieDetails);
-    });
-    // .then(movieDetails => {
-    //   setGenres(movieDetails.genres);
-    // });
+    const asyncFunc = async () => {
+      try {
+        setMovieDetails(await getDetails(movieId));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    asyncFunc();
   }, [movieId]);
 
   return (
