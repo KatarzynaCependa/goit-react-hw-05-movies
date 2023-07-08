@@ -18,6 +18,7 @@ export const MovieDetails = () => {
         },
       }
     );
+    console.log('movieDetails', movieDetails);
     return movieDetails.data;
   };
 
@@ -43,7 +44,7 @@ export const MovieDetails = () => {
             />
           </div>
           <h2>{movieDetails?.title}</h2>
-          <div>User score: {movieDetails?.vote_average * 10} %</div>
+          <div>User score: {movieDetails?.vote_average}</div>
           <h3>Overview</h3>
           <p>{movieDetails?.overview}</p>
           <h4>Genres</h4>
