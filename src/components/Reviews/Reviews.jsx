@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getReviews } from 'services/searchApi';
 
-export const Reviews = () => {
+import { getReviews } from 'services/searchApi';
+import { AuthorStyle } from './Reviews.styled';
+
+const Reviews = () => {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
 
@@ -26,7 +28,7 @@ export const Reviews = () => {
       ) : (
         reviews.map(review => (
           <li key={review.id}>
-            <p>Author: {review.author}</p>
+            <AuthorStyle>Author: {review.author}</AuthorStyle>
             <p>{review.content}</p>
           </li>
         ))
@@ -34,3 +36,5 @@ export const Reviews = () => {
     </ul>
   );
 };
+
+export default Reviews;

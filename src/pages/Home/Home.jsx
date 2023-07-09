@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { styled } from 'styled-components';
 
 import { getTrending } from 'services/searchApi';
-
-const StyledLink = styled(Link)`
-  display: flex;
-  flex-direction: column;
-  padding: 3px;
-`;
+import { StyledLink } from 'pages/Home/Home.styled';
 
 export const Home = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);

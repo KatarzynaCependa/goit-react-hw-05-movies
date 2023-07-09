@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { searchMovies } from 'services/searchApi';
 
-export const Movies = () => {
+import { searchMovies } from 'services/searchApi';
+import { FormStyled, Input, Button } from './Movies.styled';
+
+const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [moviesList, setMoviesList] = useState([]);
+  // odczytujemy nazwę zapytania z parametru linku, a jeżeli jej nie ma to mamy pusty string
   const query = searchParams.get('query') ?? '';
 
   useEffect(() => {
@@ -28,11 +31,11 @@ export const Movies = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <FormStyled onSubmit={handleSubmit}>
         {/* atrybut name określa nazwę pola, atrybut defaultValue ustawia początkową wartość */}
-        <input type="text" name="query" defaultValue={query} required />
-        <button type="submit">Search</button>
-      </form>
+        <Input type="text" name="query" defaultValue={query} required />
+        <Button type="submit">Search</Button>
+      </FormStyled>
       <ul>
         {moviesList.map(movie => (
           <li key={movie.id}>
@@ -43,3 +46,5 @@ export const Movies = () => {
     </>
   );
 };
+
+export default Movies;

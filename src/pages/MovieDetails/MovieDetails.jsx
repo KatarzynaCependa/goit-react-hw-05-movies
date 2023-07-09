@@ -1,8 +1,16 @@
 import { useParams, Link, Outlet, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
+
 import { getDetails } from 'services/searchApi';
 
-export const MovieDetails = () => {
+import {
+  Button,
+  MovieImage,
+  Wrapper,
+  Paragraph,
+} from 'pages/MovieDetails/MovieDetails.styled';
+
+const MovieDetails = () => {
   const { movieId } = useParams();
   const [movieDetails, setMovieDetails] = useState({});
   const [genres, setGenres] = useState([]);
@@ -23,25 +31,29 @@ export const MovieDetails = () => {
 
   return (
     <>
-      <button onClick={() => navigate(-1)}>Go back</button>
+      <Button onClick={() => navigate(-1)}>Go back</Button>
       {movieDetails && (
         <>
-          <div>
-            <img
-              src={`https://image.tmdb.org/t/p/w500${movieDetails?.poster_path}`}
-              alt={movieDetails?.title}
-              width={250}
-            />
-          </div>
-          <h2>{movieDetails?.title}</h2>
-          <div>User score: {movieDetails?.vote_average}</div>
-          <h3>Overview</h3>
-          <p>{movieDetails?.overview}</p>
-          <h4>Genres</h4>
-          {genres.map(genre => (
-            <p key={genre.id}>{genre.name}</p>
-          ))}
-          <p>Additional information</p>
+          <Wrapper>
+            <MovieImage>
+              <img
+                src={`https://image.tmdb.org/t/p/w500${movieDetails?.poster_path}`}
+                alt={movieDetails?.title}
+                width={250}
+              />
+            </MovieImage>
+            <div>
+              <h2>{movieDetails?.title}</h2>
+              <div>User score: {movieDetails?.vote_average}</div>
+              <h3>Overview</h3>
+              <p>{movieDetails?.overview}</p>
+              <h4>Genres</h4>
+              {genres.map(genre => (
+                <p key={genre.id}>{genre.name}</p>
+              ))}
+            </div>
+          </Wrapper>
+          <Paragraph>Additional information</Paragraph>
           <ul>
             <li>
               <Link to="cast">Cast</Link>
@@ -56,3 +68,5 @@ export const MovieDetails = () => {
     </>
   );
 };
+
+export default MovieDetails;
