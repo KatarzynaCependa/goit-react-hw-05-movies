@@ -14,16 +14,6 @@ export const getTrending = async () => {
   return response.data.results;
 };
 
-export const searchMovies = async query => {
-  const search = await axios.get('https://api.themoviedb.org/3/search/movie', {
-    params: {
-      api_key: API_key,
-      query: query,
-    },
-  });
-  return search.data.results;
-};
-
 export const getReviews = async movieId => {
   const reviews = await axios.get(
     `https://api.themoviedb.org/3/movie/${movieId}/reviews`,
@@ -58,4 +48,14 @@ export const getCast = async movieId => {
     }
   );
   return cast.data.cast;
+};
+
+export const searchMovies = async query => {
+  const search = await axios.get(`https://api.themoviedb.org/3/search/movie`, {
+    params: {
+      api_key: API_key,
+      query: query,
+    },
+  });
+  return search.data.results;
 };

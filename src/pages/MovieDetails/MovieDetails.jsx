@@ -1,16 +1,19 @@
-import { useParams, Link, Outlet } from 'react-router-dom';
+import { useParams, Link, Outlet, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { getDetails } from 'services/searchApi';
 
 export const MovieDetails = () => {
   const { movieId } = useParams();
   const [movieDetails, setMovieDetails] = useState({});
-  // const [genres, setGenres] = useState([]);
+  const [genres, setGenres] = useState([]);
+  let navigate = useNavigate();
 
   useEffect(() => {
     const asyncFunc = async () => {
       try {
-        setMovieDetails(await getDetails(movieId));
+        const movieDetails = await getDetails(movieId);
+        setMovieDetails(movieDetails);
+        setGenres(movieDetails.genres);
       } catch (error) {
         console.log(error);
       }
@@ -20,7 +23,7 @@ export const MovieDetails = () => {
 
   return (
     <>
-      <div>Go back</div>
+      <button onClick={() => navigate(-1)}>Go back</button>
       {movieDetails && (
         <>
           <div>
@@ -35,12 +38,18 @@ export const MovieDetails = () => {
           <h3>Overview</h3>
           <p>{movieDetails?.overview}</p>
           <h4>Genres</h4>
-          {/* {genres.map(genre => (
+          {genres.map(genre => (
             <p key={genre.id}>{genre.name}</p>
-          ))} */}
+          ))}
           <p>Additional information</p>
-          <Link to="cast">Cast</Link>
-          <Link to="reviews">Reviews</Link>
+          <ul>
+            <li>
+              <Link to="cast">Cast</Link>
+            </li>
+            <li>
+              <Link to="reviews">Reviews</Link>
+            </li>
+          </ul>
           <Outlet />
         </>
       )}
